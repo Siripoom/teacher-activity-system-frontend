@@ -18,6 +18,14 @@ const users = [
     role: "admin",
     department: "IT",
   },
+  {
+    id: 3,
+    email: "student@fte.kmutnb.ac.th",
+    password: "student123",
+    name: "นักศึกษาทดสอบ",
+    role: "student",
+    department: "วิศวกรรมเครื่องมือ",
+  },
 ];
 
 export async function POST(request) {

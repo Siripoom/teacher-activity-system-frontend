@@ -2,6 +2,7 @@
 
 import { Layout, Button, Breadcrumb } from "antd";
 import { LoginOutlined, MenuOutlined, HomeOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
 
 const { Header: AntHeader } = Layout;
 
@@ -10,6 +11,7 @@ export default function Header({
   setCollapsed,
   breadcrumbItems = [],
 }) {
+  const router = useRouter();
   // Default breadcrumb items if none provided
   const defaultBreadcrumbItems = [
     {
@@ -107,6 +109,7 @@ export default function Header({
           flexShrink: 0,
           minWidth: "80px",
         }}
+        onClick={() => router.push("/login")}
       >
         Login
       </Button>
