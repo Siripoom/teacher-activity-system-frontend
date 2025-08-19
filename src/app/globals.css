@@ -1,13 +1,13 @@
-/* Import statements must come first */
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f0f2f5;
   --foreground: #171717;
   --primary-color: #3D5753;
   --primary-hover: #2a3e3a;
   --primary-light: #4a665f;
+  --orange-accent: #FF6B35;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,6 +32,7 @@ body {
 /* Ant Design customizations */
 .ant-layout {
   background: #f0f2f5;
+  transition: all 0.2s;
 }
 
 .ant-layout-header {
@@ -40,6 +41,90 @@ body {
 
 .ant-layout-sider {
   background: var(--primary-color) !important;
+  transition: all 0.2s;
+}
+
+.ant-layout-content {
+  transition: all 0.2s;
+}
+
+/* Login page specific styles */
+.login-page {
+  background: linear-gradient(135deg, #059669 0%, #065f46 100%);
+  min-height: 100vh;
+}
+
+.login-card {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.logo-section {
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.login-form {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ant Design Form customizations for login */
+.ant-form-item-label > label {
+  color: #374151 !important;
+  font-weight: 500;
+}
+
+.ant-input-affix-wrapper {
+  border-radius: 8px !important;
+  border: 1px solid #d1d5db !important;
+  transition: all 0.3s ease;
+}
+
+.ant-input-affix-wrapper:hover {
+  border-color: #059669 !important;
+}
+
+.ant-input-affix-wrapper-focused {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2) !important;
+}
+
+.ant-btn-primary {
+  background: #1f2937 !important;
+  border-color: #1f2937 !important;
+  border-radius: 8px !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  background: #111827 !important;
+  border-color: #111827 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .ant-btn {
@@ -74,4 +159,43 @@ body {
 
 .ant-menu-dark .ant-menu-item-selected {
   color: white;
+}
+
+/* Layout adjustments for sidebar */
+.ant-layout-content {
+  margin-left: 200px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .ant-layout-content {
+    margin-left: 80px;
+  }
+  
+  .ant-layout-header {
+    padding: 0 12px !important;
+  }
+  
+  .header-title {
+    font-size: 16px !important;
+  }
+  
+  .ant-layout-header .ant-btn {
+    padding: 0 12px !important;
+    min-width: 60px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-title {
+    font-size: 14px !important;
+  }
+  
+  .breadcrumb {
+    font-size: 10px !important;
+  }
+  
+  .ant-layout-header .ant-btn span {
+    display: none;
+  }
 }
