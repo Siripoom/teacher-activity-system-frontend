@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Layout, Row, Col, Typography, Button } from "antd";
-import { LogoutOutlined } from "@ant-design/icons";
-import Header from "../../../../components/Header";
+import { Layout, Typography, Table, Tag, Button } from "antd";
 import { TeacherSidebar } from "../../../../components/teacher/TeacherSidebar";
-import ActivityCard from "../../../../components/ActivityCard";
+import Header from "../../../../components/Header";
+import { LogoutOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../components/AuthContext";
 import { useRouter } from "next/navigation";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function TeacherDashboard() {
+export default function TeacherActivities() {
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const router = useRouter();
@@ -21,6 +20,60 @@ export default function TeacherDashboard() {
     await logout();
     router.push("/login");
   };
+
+  const columns = [
+    {
+      title: "ชื่อกิจกรรม",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "วันที่",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "เวลา",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "สถานะ",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+        <Tag color={status === "เข้าร่วมแล้ว" ? "green" : "orange"}>
+          {status}
+        </Tag>
+      ),
+    },
+    {
+      title: "การดำเนินการ",
+      key: "action",
+      render: (_, record) => (
+        <Button type="primary" size="small">
+          {record.status === "เข้าร่วมแล้ว" ? "ดูรายละเอียด" : "เข้าร่วม"}
+        </Button>
+      ),
+    },
+  ];
+
+  const data = [
+    {
+      key: "1",
+      name: "การอบรมเชิงปฏิบัติการ: การสอนออนไลน์",
+      date: "2025-08-25",
+      time: "09:00 - 16:00",
+      status: "รอเข้าร่วม",
+    },
+    {
+      key: "2",
+      name: "สัมมนาพัฒนาศักยภาพอาจารย์",
+      date: "2025-08-23",
+      time: "13:00 - 17:00",
+      status: "เข้าร่วมแล้ว",
+    },
+  ];
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -65,43 +118,22 @@ export default function TeacherDashboard() {
           style={{
             margin: "24px",
             padding: "32px",
-            backgroundColor: "#3D5753",
+            backgroundColor: "white",
             borderRadius: "16px",
             minHeight: "calc(100vh - 128px)",
           }}
         >
-          <div style={{ textAlign: "center", marginBottom: "32px" }}>
-            <Title
-              level={1}
-              style={{
-                color: "white",
-                marginBottom: "8px",
-                fontSize: "36px",
-                fontWeight: "bold",
-                fontFamily: "'Kanit', sans-serif",
-              }}
-            >
-              แผงควบคุมอาจารย์
-            </Title>
-            <p
-              style={{
-                color: "white",
-                fontSize: "16px",
-                margin: 0,
-                fontFamily: "'Kanit', sans-serif",
-              }}
-            >
-              จัดการกิจกรรมและข้อมูลการสอน
-            </p>
-          </div>
-
-          <Row gutter={[24, 24]} style={{ marginBottom: "32px" }}>
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <Col xs={24} sm={12} lg={8} key={item}>
-                <ActivityCard />
-              </Col>
-            ))}
-          </Row>
+          <Title
+            level={2}
+            style={{
+              marginBottom: "24px",
+              fontFamily: "'Kanit', sans-serif",
+              color: "#3D5753",
+            }}
+          >
+            การเข้าร่วมกิจกรรม
+          </Title>
+          <Table columns={columns} dataSource={data} />
         </Content>
       </Layout>
     </Layout>
