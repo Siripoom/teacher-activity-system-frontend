@@ -12,23 +12,50 @@ const { Title, Text } = Typography;
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, user } = useAuth();
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated based on role
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard");
+    if (isAuthenticated && user) {
+      switch (user.role) {
+        case "admin":
+          router.push("/admin/dashboard");
+          break;
+        case "teacher":
+          router.push("/teacher/dashboard");
+          break;
+        case "student":
+          router.push("/student/dashboard");
+          break;
+        default:
+          router.push("/login");
+      }
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, user]);
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
       const result = await login(values);
 
-      if (result.success) {
-        // Redirect to dashboard on successful login
-        router.push("/dashboard");
+      if (result.success && result.user) {
+        // Redirect to role-specific dashboard
+        switch (result.user.role) {
+          case "admin":
+            router.push("/admin/dashboard");
+            break;
+          case "teacher":
+            router.push("/teacher/dashboard");
+            break;
+          case "student":
+            router.push("/student/dashboard");
+            break;
+          default:
+            message.error("Invalid user role");
+            router.push("/login");
+        }
+      } else {
+        message.error(result.message || "Login failed");
       }
     } catch (error) {
       message.error("เกิดข้อผิดพลาดในการเข้าสู่ระบบ");

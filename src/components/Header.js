@@ -10,6 +10,7 @@ export default function Header({
   collapsed,
   setCollapsed,
   breadcrumbItems = [],
+  children,
 }) {
   const router = useRouter();
   // Default breadcrumb items if none provided
@@ -95,24 +96,26 @@ export default function Header({
         </div>
       </div>
 
-      <Button
-        type="primary"
-        icon={<LoginOutlined />}
-        style={{
-          backgroundColor: "#3D5753",
-          borderColor: "#3D5753",
-          borderRadius: "8px",
-          padding: "0 16px",
-          height: "40px",
-          fontFamily: "'Kanit', sans-serif",
-          fontWeight: "500",
-          flexShrink: 0,
-          minWidth: "80px",
-        }}
-        onClick={() => router.push("/login")}
-      >
-        Login
-      </Button>
+      {children || (
+        <Button
+          type="primary"
+          icon={<LoginOutlined />}
+          style={{
+            backgroundColor: "#3D5753",
+            borderColor: "#3D5753",
+            borderRadius: "8px",
+            padding: "0 16px",
+            height: "40px",
+            fontFamily: "'Kanit', sans-serif",
+            fontWeight: "500",
+            flexShrink: 0,
+            minWidth: "80px",
+          }}
+          onClick={() => router.push("/login")}
+        >
+          Login
+        </Button>
+      )}
     </AntHeader>
   );
 }
