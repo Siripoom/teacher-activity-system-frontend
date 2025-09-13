@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Layout, Row, Col, Typography, Button } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import Header from "../../../../components/Header";
-import { TeacherSidebar } from "../../../../components/teacher/TeacherSidebar";
+import Sidebar from "../../../../components/Sidebar";
 import ActivityCard from "../../../../components/ActivityCard";
 import { useAuth } from "../../../../components/AuthContext";
 import { useRouter } from "next/navigation";
@@ -24,14 +24,22 @@ export default function TeacherDashboard() {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <TeacherSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout
         style={{
           marginLeft: collapsed ? 80 : 200,
           transition: "margin-left 0.2s",
         }}
       >
-        <Header collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Header 
+          collapsed={collapsed} 
+          setCollapsed={setCollapsed}
+          breadcrumbItems={[
+            {
+              title: "แผงควบคุมอาจารย์",
+            },
+          ]}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               style={{

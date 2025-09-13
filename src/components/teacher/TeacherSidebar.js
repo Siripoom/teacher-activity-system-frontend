@@ -106,8 +106,10 @@ export function TeacherSidebar({ collapsed, setCollapsed }) {
         style={{
           backgroundColor: "transparent",
           border: "none",
+          fontFamily: "'Kanit', sans-serif",
         }}
         items={menuItems}
+        className="teacher-sidebar-menu"
       />
     </Sider>
   );

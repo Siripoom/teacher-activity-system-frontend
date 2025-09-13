@@ -12,7 +12,7 @@ const { Content } = Layout;
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
-export default function ActivityHistory() {
+export default function AdminActivityHistory() {
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const router = useRouter();
@@ -34,7 +34,12 @@ export default function ActivityHistory() {
       key: "date",
     },
     {
-      title: "จำนวนผู้เข้าร่วม",
+      title: "เวลา",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "ผู้เข้าร่วม",
       dataIndex: "participants",
       key: "participants",
     },
@@ -43,7 +48,7 @@ export default function ActivityHistory() {
       dataIndex: "status",
       key: "status",
       render: (status) => (
-        <Tag color={status === "เสร็จสิ้น" ? "green" : "processing"}>
+        <Tag color={status === "เสร็จสิ้น" ? "green" : status === "กำลังดำเนินการ" ? "blue" : "red"}>
           {status}
         </Tag>
       ),
@@ -54,9 +59,12 @@ export default function ActivityHistory() {
       render: (_, record) => (
         <Button 
           type="primary" 
-          icon={<FileSearchOutlined />}
           size="small"
-          style={{ backgroundColor: "#3D5753" }}
+          icon={<FileSearchOutlined />}
+          style={{
+            backgroundColor: "#3D5753",
+            borderColor: "#3D5753",
+          }}
         >
           ดูรายละเอียด
         </Button>
@@ -68,16 +76,26 @@ export default function ActivityHistory() {
     {
       key: "1",
       name: "การอบรมเชิงปฏิบัติการ: การสอนออนไลน์",
-      date: "2025-08-25",
-      participants: 30,
+      date: "2025-07-25",
+      time: "09:00 - 16:00",
+      participants: 45,
       status: "เสร็จสิ้น",
     },
     {
       key: "2",
       name: "สัมมนาพัฒนาศักยภาพอาจารย์",
-      date: "2025-08-23",
-      participants: 25,
-      status: "กำลังดำเนินการ",
+      date: "2025-07-23",
+      time: "13:00 - 17:00",
+      participants: 32,
+      status: "เสร็จสิ้น",
+    },
+    {
+      key: "3",
+      name: "การประชุมคณะกรรมการพัฒนาหลักสูตร",
+      date: "2025-07-20",
+      time: "14:00 - 16:00",
+      participants: 15,
+      status: "เสร็จสิ้น",
     },
   ];
 
@@ -90,7 +108,19 @@ export default function ActivityHistory() {
           transition: "margin-left 0.2s",
         }}
       >
-        <Header collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Header 
+          collapsed={collapsed} 
+          setCollapsed={setCollapsed}
+          breadcrumbItems={[
+            {
+              title: "แผงควบคุมผู้ดูแลระบบ",
+              href: "/admin/dashboard",
+            },
+            {
+              title: "ประวัติกิจกรรม",
+            },
+          ]}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               style={{
@@ -100,7 +130,7 @@ export default function ActivityHistory() {
                 fontSize: "16px",
               }}
             >
-              อาจารย์
+              ผู้ดูแลระบบ
             </span>
             <Button
               type="primary"
@@ -129,28 +159,32 @@ export default function ActivityHistory() {
             minHeight: "calc(100vh - 128px)",
           }}
         >
-          <div style={{ 
-            display: "flex", 
-            justifyContent: "space-between", 
-            alignItems: "center",
-            marginBottom: "24px" 
-          }}>
-            <Title
-              level={2}
-              style={{
-                margin: 0,
-                fontFamily: "'Kanit', sans-serif",
-                color: "#3D5753",
-              }}
-            >
-              ประวัติกิจกรรม
-            </Title>
-            <RangePicker 
-              style={{ width: 300 }}
-              placeholder={["วันที่เริ่มต้น", "วันที่สิ้นสุด"]}
-            />
+          <Title
+            level={2}
+            style={{
+              marginBottom: "24px",
+              fontFamily: "'Kanit', sans-serif",
+              color: "#3D5753",
+            }}
+          >
+            ประวัติกิจกรรม
+          </Title>
+          
+          <div style={{ marginBottom: "16px" }}>
+            <RangePicker placeholder={["วันที่เริ่มต้น", "วันที่สิ้นสุด"]} />
           </div>
-          <Table columns={columns} dataSource={data} />
+          
+          <Table 
+            columns={columns} 
+            dataSource={data}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => 
+                `${range[0]}-${range[1]} จาก ${total} รายการ`,
+            }}
+          />
         </Content>
       </Layout>
     </Layout>

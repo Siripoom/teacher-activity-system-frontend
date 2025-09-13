@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Layout, Row, Col, Typography, Button } from "antd";
+import { Layout, Typography, Button } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import Header from "../../../../components/Header";
 import Sidebar from "../../../../components/Sidebar";
-import ActivityCard from "../../../../components/ActivityCard";
+import AdminDashboard from "../../../../components/AdminDashboard";
 import { useAuth } from "../../../../components/AuthContext";
 import { useRouter } from "next/navigation";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function AdminDashboard() {
+export default function AdminDashboardPage() {
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const router = useRouter();
@@ -31,7 +31,15 @@ export default function AdminDashboard() {
           transition: "margin-left 0.2s",
         }}
       >
-        <Header collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Header
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          breadcrumbItems={[
+            {
+              title: "แผงควบคุมผู้ดูแลระบบ",
+            },
+          ]}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               style={{
@@ -65,7 +73,7 @@ export default function AdminDashboard() {
           style={{
             margin: "24px",
             padding: "32px",
-            backgroundColor: "#3D5753",
+            backgroundColor: "white",
             borderRadius: "16px",
             minHeight: "calc(100vh - 128px)",
           }}
@@ -74,7 +82,7 @@ export default function AdminDashboard() {
             <Title
               level={1}
               style={{
-                color: "white",
+                color: "#3D5753",
                 marginBottom: "8px",
                 fontSize: "36px",
                 fontWeight: "bold",
@@ -85,7 +93,7 @@ export default function AdminDashboard() {
             </Title>
             <p
               style={{
-                color: "white",
+                color: "#6c757d",
                 fontSize: "16px",
                 margin: 0,
                 fontFamily: "'Kanit', sans-serif",
@@ -95,13 +103,7 @@ export default function AdminDashboard() {
             </p>
           </div>
 
-          <Row gutter={[24, 24]} style={{ marginBottom: "32px" }}>
-            {[1, 2, 3, 4].map((item) => (
-              <Col xs={24} sm={12} lg={6} key={item}>
-                <ActivityCard />
-              </Col>
-            ))}
-          </Row>
+          <AdminDashboard />
         </Content>
       </Layout>
     </Layout>

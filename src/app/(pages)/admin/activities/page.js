@@ -1,18 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Layout, Typography, Table, Tag, Button } from "antd";
-import { TeacherSidebar } from "../../../../components/teacher/TeacherSidebar";
+import { Layout, Typography, Button, Table } from "antd";
+import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
-import { LogoutOutlined } from "@ant-design/icons";
+import SearchBar from "../../../../components/SearchBar";
+import { LogoutOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../components/AuthContext";
 import { useRouter } from "next/navigation";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function TeacherActivities() {
+export default function AdminActivities() {
   const [collapsed, setCollapsed] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [department, setDepartment] = useState("all");
+  const [major, setMajor] = useState("all");
   const { logout } = useAuth();
   const router = useRouter();
 
@@ -21,70 +25,165 @@ export default function TeacherActivities() {
     router.push("/login");
   };
 
+  const allData = [
+    {
+      key: "1",
+      id: 1,
+      name: "การอบรมเชิงปฏิบัติการ: การสอนออนไลน์",
+      department: "วิศวกรรมคอมพิวเตอร์",
+      major: "วิทยาการคอมพิวเตอร์",
+      participants: "15/30",
+      enrolledCount: 15,
+      maxCount: 30,
+    },
+    {
+      key: "2",
+      id: 2,
+      name: "สัมมนาพัฒนาศักยภาพอาจารย์",
+      department: "วิศวกรรมไฟฟ้า",
+      major: "วิศวกรรมไฟฟ้า",
+      participants: "22/25",
+      enrolledCount: 22,
+      maxCount: 25,
+    },
+    {
+      key: "3",
+      id: 3,
+      name: "การประชุมคณะกรรมการพัฒนาหลักสูตร",
+      department: "วิศวกรรมคอมพิวเตอร์",
+      major: "เทคโนโลยีสารสนเทศ",
+      participants: "8/15",
+      enrolledCount: 8,
+      maxCount: 15,
+    },
+    {
+      key: "4",
+      id: 4,
+      name: "งานวิจัยและนวัตกรรม",
+      department: "วิศวกรรมเครื่องกล",
+      major: "วิศวกรรมเครื่องกล",
+      participants: "30/40",
+      enrolledCount: 30,
+      maxCount: 40,
+    },
+    {
+      key: "5",
+      id: 5,
+      name: "การพัฒนาหลักสูตรใหม่",
+      department: "วิศวกรรมโยธา",
+      major: "วิศวกรรมโยธา",
+      participants: "12/20",
+      enrolledCount: 12,
+      maxCount: 20,
+    },
+  ];
+
+  // Table columns for admin view
   const columns = [
     {
-      title: "ชื่อกิจกรรม",
+      title: "ลำดับ",
+      dataIndex: "id",
+      key: "id",
+      width: 80,
+      align: "center",
+    },
+    {
+      title: "กิจกรรม",
       dataIndex: "name",
       key: "name",
+      width: 300,
     },
     {
-      title: "วันที่",
-      dataIndex: "date",
-      key: "date",
+      title: "ภาควิชา",
+      dataIndex: "department",
+      key: "department",
+      width: 200,
     },
     {
-      title: "เวลา",
-      dataIndex: "time",
-      key: "time",
+      title: "สาขาวิชา",
+      dataIndex: "major",
+      key: "major",
+      width: 200,
     },
     {
-      title: "สถานะ",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => (
-        <Tag color={status === "เข้าร่วมแล้ว" ? "green" : "orange"}>
-          {status}
-        </Tag>
+      title: "จำนวนนักศึกษาที่เข้าร่วม",
+      dataIndex: "participants",
+      key: "participants",
+      width: 180,
+      align: "center",
+      render: (text, record) => (
+        <span style={{ 
+          color: record.enrolledCount === record.maxCount ? "#52c41a" : 
+                 record.enrolledCount >= record.maxCount * 0.8 ? "#faad14" : "#1890ff",
+          fontWeight: "500"
+        }}>
+          {text}
+        </span>
       ),
     },
     {
       title: "การดำเนินการ",
       key: "action",
+      width: 120,
+      align: "center",
       render: (_, record) => (
-        <Button type="primary" size="small">
-          {record.status === "เข้าร่วมแล้ว" ? "ดูรายละเอียด" : "เข้าร่วม"}
+        <Button
+          type="primary"
+          icon={<EyeOutlined />}
+          size="small"
+          style={{
+            backgroundColor: "#3D5753",
+            borderColor: "#3D5753",
+          }}
+          onClick={() => handleViewDetails(record)}
+        >
+          ดูรายละเอียด
         </Button>
       ),
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "การอบรมเชิงปฏิบัติการ: การสอนออนไลน์",
-      date: "2025-08-25",
-      time: "09:00 - 16:00",
-      status: "รอเข้าร่วม",
-    },
-    {
-      key: "2",
-      name: "สัมมนาพัฒนาศักยภาพอาจารย์",
-      date: "2025-08-23",
-      time: "13:00 - 17:00",
-      status: "เข้าร่วมแล้ว",
-    },
-  ];
+  const handleViewDetails = (record) => {
+    console.log("View details for:", record);
+    // Handle view details action
+  };
+
+  // Filter data based on search criteria
+  const filteredData = allData.filter((item) => {
+    const matchesSearch =
+      searchValue === "" ||
+      item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.department.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.major.toLowerCase().includes(searchValue.toLowerCase());
+    const matchesDepartment =
+      department === "all" || item.department.includes(department);
+    const matchesMajor = major === "all" || item.major.includes(major);
+
+    return matchesSearch && matchesDepartment && matchesMajor;
+  });
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <TeacherSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout
         style={{
           marginLeft: collapsed ? 80 : 200,
           transition: "margin-left 0.2s",
         }}
       >
-        <Header collapsed={collapsed} setCollapsed={setCollapsed}>
+        <Header
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          breadcrumbItems={[
+            {
+              title: "แผงควบคุมผู้ดูแลระบบ",
+              href: "/admin/dashboard",
+            },
+            {
+              title: "การเข้าร่วมกิจกรรม",
+            },
+          ]}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <span
               style={{
@@ -94,7 +193,7 @@ export default function TeacherActivities() {
                 fontSize: "16px",
               }}
             >
-              อาจารย์
+              ผู้ดูแลระบบ
             </span>
             <Button
               type="primary"
@@ -133,7 +232,29 @@ export default function TeacherActivities() {
           >
             การเข้าร่วมกิจกรรม
           </Title>
-          <Table columns={columns} dataSource={data} />
+
+          <SearchBar
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            department={department}
+            onDepartmentChange={setDepartment}
+            major={major}
+            onMajorChange={setMajor}
+          />
+
+          <Table
+            columns={columns}
+            dataSource={filteredData}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) =>
+                `${range[0]}-${range[1]} จาก ${total} รายการ`,
+            }}
+            scroll={{ x: 1200 }}
+            style={{ marginTop: "16px" }}
+          />
         </Content>
       </Layout>
     </Layout>

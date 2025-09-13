@@ -1,0 +1,385 @@
+/* AdminDashboard Component Styles */
+.admin-dashboard {
+  padding: 0;
+  font-family: 'Kanit', sans-serif;
+}
+
+/* Section Styles */
+.dashboard-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3D5753;
+  margin-bottom: 20px;
+  font-family: 'Kanit', sans-serif;
+  border-bottom: 3px solid #3D5753;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+/* Section 1: Personnel Cards */
+.personnel-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: all 0.3s ease;
+  height: 140px;
+}
+
+.personnel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.personnel-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+}
+
+.personnel-avatar {
+  background: linear-gradient(135deg, #3D5753 0%, #4a665f 100%);
+  flex-shrink: 0;
+}
+
+.personnel-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #3D5753;
+  font-family: 'Kanit', sans-serif;
+}
+
+.personnel-count {
+  font-size: 32px;
+  font-weight: 700;
+  color: #3D5753;
+  line-height: 1;
+  font-family: 'Kanit', sans-serif;
+}
+
+.personnel-label {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Different card colors */
+.student-card {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+}
+
+.faculty-card {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+}
+
+.staff-card {
+  background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%);
+}
+
+/* Section 2: Department Tabs */
+.department-tabs-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  padding: 24px;
+}
+
+.department-tabs .ant-tabs-nav {
+  margin-bottom: 24px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.department-tabs .ant-tabs-tab {
+  padding: 12px 20px !important;
+  margin-right: 8px !important;
+  border-radius: 12px 12px 0 0 !important;
+  border: none !important;
+  background: #f8f9fa !important;
+  transition: all 0.3s ease !important;
+  font-family: 'Kanit', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+}
+
+.department-tabs .ant-tabs-tab:hover {
+  background: #e9ecef !important;
+  color: #3D5753 !important;
+}
+
+.department-tabs .ant-tabs-tab-active {
+  background: #3D5753 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.department-tabs .ant-tabs-ink-bar {
+  display: none !important;
+}
+
+/* Department Statistics */
+.department-stats {
+  min-height: 300px;
+}
+
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+  color: #6c757d !important;
+  font-weight: 500 !important;
+  font-family: 'Kanit', sans-serif !important;
+  font-size: 14px !important;
+  margin-bottom: 8px !important;
+}
+
+.stat-card .ant-statistic-content {
+  font-family: 'Kanit', sans-serif !important;
+}
+
+/* Activities Breakdown */
+.activities-breakdown-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+}
+
+.activities-breakdown-card .ant-card-head-title {
+  font-family: 'Kanit', sans-serif !important;
+  font-weight: 600 !important;
+  color: #3D5753 !important;
+}
+
+.category-stat-card {
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-stat-card:hover {
+  border-color: #3D5753;
+  box-shadow: 0 2px 8px rgba(61, 87, 83, 0.2);
+}
+
+.category-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.category-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.category-info {
+  flex: 1;
+}
+
+.category-name {
+  font-size: 13px;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 4px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.category-count {
+  font-size: 18px;
+  font-weight: 600;
+  color: #3D5753;
+  font-family: 'Kanit', sans-serif;
+}
+
+/* Section 3: Recent Activities */
+.recent-activities-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.activities-table {
+  font-family: 'Kanit', sans-serif;
+}
+
+.activities-table .ant-table-thead > tr > th {
+  background: #f8f9fa !important;
+  border-bottom: 2px solid #dee2e6 !important;
+  font-weight: 600 !important;
+  color: #3D5753 !important;
+  font-family: 'Kanit', sans-serif !important;
+  font-size: 14px !important;
+  padding: 16px 12px !important;
+}
+
+.activities-table .ant-table-tbody > tr > td {
+  padding: 12px !important;
+  border-bottom: 1px solid #e9ecef !important;
+  font-family: 'Kanit', sans-serif !important;
+  color: #495057 !important;
+  font-size: 14px !important;
+}
+
+.activities-table .ant-table-tbody > tr:hover > td {
+  background: #f8f9fa !important;
+}
+
+/* Tags in table */
+.activities-table .ant-tag {
+  font-family: 'Kanit', sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+/* Pagination */
+.activities-table .ant-pagination {
+  margin-top: 20px !important;
+  text-align: center !important;
+  font-family: 'Kanit', sans-serif !important;
+}
+
+.activities-table .ant-pagination-item {
+  border-radius: 8px !important;
+  font-family: 'Kanit', sans-serif !important;
+}
+
+.activities-table .ant-pagination-item-active {
+  background-color: #3D5753 !important;
+  border-color: #3D5753 !important;
+}
+
+.activities-table .ant-pagination-item-active a {
+  color: white !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 0;
+  }
+  
+  .dashboard-section {
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .personnel-card {
+    height: 120px;
+  }
+  
+  .personnel-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .personnel-avatar {
+    margin: 0 auto;
+  }
+  
+  .personnel-info h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .personnel-count {
+    font-size: 24px;
+  }
+  
+  .department-tabs .ant-tabs-tab {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    margin-right: 4px !important;
+  }
+  
+  .department-stats {
+    min-height: 250px;
+  }
+  
+  .category-stat-card {
+    height: 70px;
+  }
+  
+  .category-stat {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+  
+  .category-name {
+    font-size: 11px;
+  }
+  
+  .category-count {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 18px;
+  }
+  
+  .personnel-card {
+    height: 100px;
+  }
+  
+  .personnel-count {
+    font-size: 20px;
+  }
+  
+  .activities-table .ant-table-thead > tr > th,
+  .activities-table .ant-table-tbody > tr > td {
+    padding: 8px 6px !important;
+    font-size: 12px !important;
+  }
+  
+  .category-icon {
+    font-size: 20px;
+  }
+}
+
+/* Loading and Empty States */
+.activities-table .ant-spin-container {
+  min-height: 200px;
+}
+
+.activities-table .ant-empty {
+  margin: 40px 0;
+}
+
+.activities-table .ant-empty-description {
+  font-family: 'Kanit', sans-serif;
+  color: #6c757d;
+}

@@ -1,8 +1,16 @@
 "use client";
 
-import { Layout, Button, Breadcrumb } from "antd";
-import { LoginOutlined, MenuOutlined, HomeOutlined } from "@ant-design/icons";
+import { Layout, Button, Breadcrumb, Dropdown, Avatar } from "antd";
+import {
+  LoginOutlined,
+  MenuOutlined,
+  HomeOutlined,
+  UserOutlined,
+  LogoutOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 const { Header: AntHeader } = Layout;
 
@@ -13,6 +21,39 @@ export default function Header({
   children,
 }) {
   const router = useRouter();
+  const { user, isAuthenticated, logout } = useAuth();
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
+
+  // Handle profile click
+  const handleProfile = () => {
+    // TODO: Navigate to profile page
+    router.push("/profile");
+  };
+
+  // Dropdown menu items
+  const dropdownItems = [
+    {
+      key: "profile",
+      label: "โปรไฟล์",
+      icon: <UserOutlined />,
+      onClick: handleProfile,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: "ออกจากระบบ",
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+  ];
+
   // Default breadcrumb items if none provided
   const defaultBreadcrumbItems = [
     {
@@ -96,26 +137,71 @@ export default function Header({
         </div>
       </div>
 
-      {children || (
-        <Button
-          type="primary"
-          icon={<LoginOutlined />}
-          style={{
-            backgroundColor: "#3D5753",
-            borderColor: "#3D5753",
-            borderRadius: "8px",
-            padding: "0 16px",
-            height: "40px",
-            fontFamily: "'Kanit', sans-serif",
-            fontWeight: "500",
-            flexShrink: 0,
-            minWidth: "80px",
-          }}
-          onClick={() => router.push("/login")}
-        >
-          Login
-        </Button>
-      )}
+      {children ||
+        (isAuthenticated && user ? (
+          <Dropdown
+            menu={{ items: dropdownItems }}
+            trigger={["click"]}
+            placement="bottomRight"
+          >
+            <Button
+              type="text"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "8px 12px",
+                height: "40px",
+                border: "1px solid #d9d9d9",
+                borderRadius: "8px",
+                fontFamily: "'Kanit', sans-serif",
+                fontWeight: "500",
+                flexShrink: 0,
+                minWidth: "120px",
+                backgroundColor: "white",
+                color: "#3D5753",
+              }}
+            >
+              <Avatar
+                size="small"
+                icon={<UserOutlined />}
+                style={{
+                  backgroundColor: "#3D5753",
+                }}
+              />
+              <span
+                style={{
+                  maxWidth: "100px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {user.name || user.email || "ผู้ใช้"}
+              </span>
+              <DownOutlined style={{ fontSize: "12px" }} />
+            </Button>
+          </Dropdown>
+        ) : (
+          <Button
+            type="primary"
+            icon={<LoginOutlined />}
+            style={{
+              backgroundColor: "#3D5753",
+              borderColor: "#3D5753",
+              borderRadius: "8px",
+              padding: "0 16px",
+              height: "40px",
+              fontFamily: "'Kanit', sans-serif",
+              fontWeight: "500",
+              flexShrink: 0,
+              minWidth: "80px",
+            }}
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </Button>
+        ))}
     </AntHeader>
   );
 }

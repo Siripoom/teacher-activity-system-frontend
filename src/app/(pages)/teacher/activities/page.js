@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Layout, Typography, Table, Tag, Button } from "antd";
-import { TeacherSidebar } from "../../../../components/teacher/TeacherSidebar";
+import Sidebar from "../../../../components/Sidebar";
 import Header from "../../../../components/Header";
 import { LogoutOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../../components/AuthContext";
@@ -77,7 +77,7 @@ export default function TeacherActivities() {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <TeacherSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout
         style={{
           marginLeft: collapsed ? 80 : 200,
